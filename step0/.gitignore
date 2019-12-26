@@ -1,0 +1,8 @@
+local/
+log/
+db/*.db
+.DS_Store
+local/
+log/
+db/*.db
+.DS_Store
