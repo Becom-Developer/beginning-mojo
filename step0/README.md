@@ -45,4 +45,4 @@ step0 が一番むつかしいのです。
 
 # SEE ALSO
 
-- [/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦
+- [beginning_mojo](/) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦
