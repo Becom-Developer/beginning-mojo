@@ -1,6 +1,6 @@
 # NAME
 
-step0 - やることを整理しておく
+chapter0 - やることを整理しておく
 
 # CONTENT
 
@@ -45,4 +45,4 @@ step0 が一番むつかしいのです。
 
 # SEE ALSO
 
-- [beginning_mojo](../) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦
+- [beginning_mojo/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦

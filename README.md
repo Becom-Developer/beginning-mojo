@@ -22,16 +22,20 @@ web アプリケーション自体も複雑化し、 web アプリの作り方�
 
 # MENU
 
-- [STEP0](/step0): やることを整理しておく
-- [STEP1](/step1): 仕様案を作成
-- [STEP2](/step2): 開発環境を構築
-- [STEP3](/step3): 仕様案を参考に実装
-- [STEP4](/step4): 完成品に対しての課題をまとめる
-- [STEP5](/step5): 完成品に対してテストコードを実装
-- [STEP6](/step6): テストコードと機能追加実装を同時にすすめる
-- [STEP7](/step7): 保守と拡張性が高い構造体に変更する準備
-- [STEP8](/step8): Mojolicious ベースにリファクタリングをする
-- [STEP9](/step9): 新しい機能を追加する
+- [CHAPTER0](/chapter0): やることを整理しておく
+- [CHAPTER1](/chapter1): 仕様案を作成
+- [CHAPTER2](/chapter2): 開発環境を構築
+- [CHAPTER3](/chapter3): 仕様案を参考に実装
+- [CHAPTER4](/chapter4): 完成品に対しての課題をまとめる
+- [CHAPTER5](/chapter5): 完成品に対してテストコードを実装
+- [CHAPTER6](/chapter6): テストコードと機能追加実装を同時にすすめる
+- [CHAPTER7](/chapter7): 保守と拡張性が高い構造体に変更する準備
+- [CHAPTER8](/chapter8): Mojolicious ベースにリファクタリングをする
+- [CHAPTER9](/chapter9): 新しい機能を追加する
+
+---
+
+- [TUTORIAL](/tutorial): 新しくコードを記述するスペース
 
 # SEE ALSO
 
