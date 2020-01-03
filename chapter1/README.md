@@ -35,3 +35,13 @@ CREATE TABLE bulletin (                                 -- 掲示板
     modified_ts     TEXT                                -- 修正日時 (例: '2019-08-22 17:01:29')
 );
 ```
+
+# SUMMARY
+
+-
+-
+-
+
+# SEE ALSO
+
+- [beginning_mojo/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦

@@ -26,11 +26,10 @@ $ plenv rehash
 $ plenv global 5.30.0
 $ plenv install-cpanm
 $ cpanm Carton
-$ cpanm Perl::Tidy
 
 $ cd ~/github/beginning_mojo/tutorial/
 
-(mojo ほか、準備、理解を深めるために一行づつ書き込み実行)
+(Perl のバージョンを固定 Mojolicious をインストール)
 $ echo '5.30.0' > .perl-version;
 $ echo "requires 'Mojolicious', '== 8.25';" >> cpanfile;
 $ carton install
