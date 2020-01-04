@@ -1,10 +1,10 @@
 # NAME
 
-work_01.md - 実装作業 (最低限度の画面を作成)
+section1 - 実装作業 (最低限度の画面を作成)
 
 # SYNOPSIS
 
-共通テンプレートを調整する
+___共通テンプレートを調整する___
 
 - `__DATA__`配下がテンプレートとして読み込まれている
 - 共通テンプレートは`layouts/default.html.ep`
@@ -38,10 +38,10 @@ GET - `/` - index 掲示板の紹介画面のテンプレ修正
 
 # COMPLETE
 
-この作業での完成形
+___この作業での完成形___
 
 - [/chapter3/section1/bulletin.pl](/chapter3/section1/bulletin.pl)
 
 # SEE ALSO
 
-- [/chapter3/README.md](/chapter3/README.md) - chapter3 - 仕様案を参考に実装
+- [/chapter3](/chapter3) - 仕様案を参考に実装
