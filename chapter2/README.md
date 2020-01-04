@@ -49,4 +49,14 @@ $ carton exec -- morbo bulletin.pl
 
 完成形のディレクトリ構造をイメージしておくとよい
 
-- [dir_history.md](/beginning_mojo/doc/dir_history.md#step3): STEP3 を参照
+- [dir_history.md](/dir_history.md#step3): STEP3 を参照
+
+# SUMMARY
+
+-
+-
+-
+
+# SEE ALSO
+
+- [/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦

@@ -44,4 +44,4 @@ CREATE TABLE bulletin (                                 -- 掲示板
 
 # SEE ALSO
 
-- [beginning_mojo/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦
+- [/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦
