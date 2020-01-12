@@ -2,7 +2,11 @@
 
 section1 - 実装作業 (最低限度の画面を作成)
 
-# SYNOPSIS
+```
+目に見えるところから作業を始める方が理解はしやすい
+```
+
+## SUBSECTION1
 
 ___共通テンプレートを調整する___
 
@@ -11,7 +15,7 @@ ___共通テンプレートを調整する___
 - html のタグ情報などを調整しておく
 
 ```perl
-# ...
+...
 @@ layouts/default.html.ep
 <!DOCTYPE html>
 <html lang="ja">
@@ -21,22 +25,28 @@ ___共通テンプレートを調整する___
   </head>
   <body><%= content %></body>
 </html>
-# ...
+...
 ```
 
-GET - `/` - index 掲示板の紹介画面のテンプレ修正
+## SUBSECTION2
 
-```
+___GET - `/` - index 掲示板の紹介画面のテンプレ修正___
+
+```perl
+...
 @@ index.html.ep
 % layout 'default';
 % title '掲示板の紹介画面';
 <h1>だれでも書込みできる掲示板</h1>
 <p><a href="/list">掲示板の一覧表示へ</a></p>
+...
 ```
 
-この作業での完成形を参考にして`/list`と`/create`のメソッドと画面を実装する
+## SUBSECTION3
 
-# COMPLETE
+___この作業での完成形を参考にして`/list`と`/create`のメソッドと画面を実装する___
+
+## SUBSECTION4
 
 ___この作業での完成形___
 

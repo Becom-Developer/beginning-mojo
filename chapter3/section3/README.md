@@ -2,17 +2,25 @@
 
 section3 - 実装作業 (データーベースと接続)
 
-# SYNOPSIS
-
-___データベースアプリケーションは様々な選択肢があるが今回は`sqlite3`を活用する___
-
 ```
+現在ではデータの永続化は様々な手法があるが広く使われているSQLについて学ぶ
+```
+
+## SUBSECTION1
+
+___sqlite3 を設定___
+
+データベースアプリケーションは様々な選択肢があるが今回は`sqlite3`を活用する
+
+```sh
 (データベース用のディレクトリの中にスキーマーファイル用意)
 $ mkdir ~/github/beginning_mojo/tutorial/db
 $ touch ~/github/beginning_mojo/tutorial/db/bulletin_schema.sql
 ```
 
-スキーマーファイルを任意のテキストエディタで作成
+## SUBSECTION2
+
+___スキーマーファイルを任意のテキストエディタで作成___
 
 `/db/bulletin_schema.sql`
 
@@ -27,9 +35,11 @@ CREATE TABLE bulletin (                                 -- 掲示板
 );
 ```
 
-スキーマーファイルを読み込んでデータベースファイルを作成
+## SUBSECTION3
 
-```
+___スキーマーファイルを読み込んでデータベースファイルを作成___
+
+```sh
 $ cd ~/github/beginning_mojo/tutorial/db
 $ sqlite3 ./bulletin.db < ./bulletin_schema.sql
 
@@ -42,7 +52,7 @@ $ echo 'db/*.db' >> .gitignore;
 
 Perl の Teng モジュールを活用する
 
-```
+```sh
 (Perl のバージョンを固定 Mojolicious をインストール)
 $ cd ~/github/beginning_mojo/tutorial/
 $ echo "requires 'Teng', '0.31';" >> cpanfile;
@@ -50,10 +60,13 @@ $ echo "requires 'DBD::SQLite', '1.64';" >> cpanfile;
 $ carton install
 ```
 
-`/bulletin.pl`
+## SUBSECTION4
 
-```
-(データベースのスキーマーを自動取得する、実行速度は遅くはなる)
+___`/bulletin.pl`を修正___
+
+データベースのスキーマーを自動取得する、実行速度は遅くはなる
+
+```perl
 ...
 use Teng;
 use Teng::Schema::Loader;
@@ -67,7 +80,7 @@ sub teng {
 
 ダミーの値をデータベースから取得に切り替える
 
-```
+```perl
 get '/list' => sub {
     my $c    = shift;
     my $teng = teng();
@@ -79,7 +92,7 @@ get '/list' => sub {
 
 書き込みを登録できるようにする
 
-```
+```perl
 ...
 use Time::Piece;
 ...
@@ -94,7 +107,7 @@ post '/store' => sub {
 - ORMを使うと実行速度は落ちるがメンテナンスはしやすくなる
 - データを作成するときにタイムスタンプを作るのはよくあるやり方
 
-# COMPLETE
+## SUBSECTION5
 
 ___この作業での完成形___
 
