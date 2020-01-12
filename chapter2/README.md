@@ -2,11 +2,10 @@
 
 chapter2 - 開発環境を構築
 
-# CONTENT
+## SECTION1
 
-開発環境ついて参考になる資料
+___開発環境ついて参考になる資料___
 
-具体的なコマンドの手順
 
 開発環境の実行手順
 
@@ -17,7 +16,11 @@ chapter2 - 開発環境を構築
 
 - <https://github.com/ykHakata/summary/blob/master/perl5_install.md> - perl5_install
 
-```
+## SECTION2
+
+___具体的なコマンドの手順___
+
+```sh
 (perl 準備)
 $ cd ~/.plenv/ && git pull
 $ cd ~/.plenv/plugins/perl-build/ && git pull

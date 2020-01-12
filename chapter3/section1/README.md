@@ -10,8 +10,8 @@ ___共通テンプレートを調整する___
 - 共通テンプレートは`layouts/default.html.ep`
 - html のタグ情報などを調整しておく
 
-```
-...
+```perl
+# ...
 @@ layouts/default.html.ep
 <!DOCTYPE html>
 <html lang="ja">
@@ -21,7 +21,7 @@ ___共通テンプレートを調整する___
   </head>
   <body><%= content %></body>
 </html>
-...
+# ...
 ```
 
 GET - `/` - index 掲示板の紹介画面のテンプレ修正
