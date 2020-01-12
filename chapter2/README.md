@@ -2,6 +2,12 @@
 
 chapter2 - 開発環境を構築
 
+```
+この資料のサンプルコードを掲載しているgithubのリポジトリにtutorialというディレクトリがあります、
+そのディレクトリを実習の作業場所にしましょう。
+これから先の解説はすべてtutorialディレクトリの中で実行する想定ですすめます。
+```
+
 ## SECTION1
 
 ___開発環境ついて参考になる資料___
@@ -52,7 +58,7 @@ $ carton exec -- morbo bulletin.pl
 
 完成形のディレクトリ構造をイメージしておくとよい
 
-- [dir_history.md](/dir_history.md#step3): STEP3 を参照
+- [dir_history.md](/dir_history.md#chapter2): STEP3 を参照
 
 # SUMMARY
 

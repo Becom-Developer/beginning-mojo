@@ -6,7 +6,7 @@ dir_history.md - 参考資料 (ディレクトリ構造のイメージ)
 
 完成形のディレクトリ構造のイメージ
 
-# STEP3
+# CHAPTER2
 
 Mojolicious::Lite
 
