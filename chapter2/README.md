@@ -2,7 +2,7 @@
 
 chapter2 - 開発環境を構築
 
-```
+```text
 この資料のサンプルコードを掲載しているgithubのリポジトリにtutorialというディレクトリがあります、
 そのディレクトリを実習の作業場所にしましょう。
 これから先の解説はすべてtutorialディレクトリの中で実行する想定ですすめます。
@@ -60,12 +60,12 @@ $ carton exec -- morbo bulletin.pl
 
 - [dir_history.md](/dir_history.md#chapter2): STEP3 を参照
 
-# SUMMARY
+## SUMMARY
 
 -
 -
 -
 
-# SEE ALSO
+## SEE ALSO
 
 - [/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦
