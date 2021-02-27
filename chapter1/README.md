@@ -26,6 +26,7 @@ bulletin - 簡易的な掲示板
       - システム MacOS
       - プログラミング言語: Perl
       - web フレームワーク: mojo
+      - docker 環境を活用
   - 実装について参考になりそうな資料を用意
 
 ### Screen
