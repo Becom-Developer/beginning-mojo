@@ -79,6 +79,7 @@ fi
 
 ```md
 dir                   # Application directory
+|- db                 # データベース関連ファイル
 |- local              # 拡張モジュール各種
 |- .gitignore         # git で管理しないリスト
 |- bulletin.pl        # 実行スクリプト
