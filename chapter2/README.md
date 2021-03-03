@@ -3,7 +3,6 @@
 bulletin - 簡易的な掲示板
 
 ```md
-開発課題
 chapter2 - 開発環境を準備
 ```
 
@@ -116,7 +115,7 @@ dir                   # Application directory
 
 ### Screen
 
-![画面遷移](/chapter1/borad.jpg)
+![画面遷移](/img/borad.jpg)
 
 ### URL
 
