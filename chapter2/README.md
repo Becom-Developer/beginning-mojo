@@ -1,71 +1,144 @@
-# NAME
+# Name
 
-chapter2 - 開発環境を構築
+bulletin - 簡易的な掲示板
 
-```text
-この資料のサンプルコードを掲載しているgithubのリポジトリにtutorialというディレクトリがあります、
-そのディレクトリを実習の作業場所にしましょう。
-これから先の解説はすべてtutorialディレクトリの中で実行する想定ですすめます。
+```md
+開発課題
+chapter2 - 開発環境を準備
 ```
 
-## SECTION1
+## Setting
 
-___開発環境ついて参考になる資料___
+ローカル開発環境、初期の構築手順 (MacOS)
 
+```zsh
+(任意のディレクリを作成、今回は ~/tmp/bulletin/)
+% mkdir -p ~/tmp/bulletin/ && cd ~/tmp/bulletin/
 
-開発環境の実行手順
+(ファイルの中身は下記の記事参考)
+% touch Dockerfile docker-compose.yml compose-cmd.bash && \
+chmod +x compose-cmd.bash && \
+echo "requires 'Mojolicious', '== 9.01';" > cpanfile && \
+echo "local/\n.DS_Store\ndb/*.db" > .gitignore
 
-- plenv: 2.3.0-10-gb8ca5d3
-- perl: 5.30.0
+(データベースのファイルを作っておく、内容は下記の DB のスキーマ)
+mkdir db && touch ./db/bulletin.sql
 
-こちらの記事参考
+(最初はイメージがないので build オプションで実行)
+% docker-compose up --build
 
-- <https://github.com/ykHakata/summary/blob/master/perl5_install.md> - perl5_install
+(ビルドがすべておわったら web ブラウザで localhost:3000 で確認)
 
-## SECTION2
-
-___具体的なコマンドの手順___
-
-```sh
-(perl 準備)
-$ cd ~/.plenv/ && git pull
-$ cd ~/.plenv/plugins/perl-build/ && git pull
-$ plenv install 5.30.0
-$ plenv rehash
-$ plenv global 5.30.0
-$ plenv install-cpanm
-$ cpanm Carton
-
-$ cd ~/github/beginning_mojo/tutorial/
-
-(Perl のバージョンを固定 Mojolicious をインストール)
-$ echo '5.30.0' > .perl-version;
-$ echo "requires 'Mojolicious', '== 8.25';" >> cpanfile;
-$ carton install
-
-(雛形作成、パーミッションが 0744 の実行ファイルがつくられる)
-$ carton exec -- mojo generate lite_app bulletin.pl
-
-(git設定)
-$ echo 'local/' >> .gitignore;
-$ echo '.DS_Store' >> .gitignore;
-
-(起動テスト)
-$ carton exec -- morbo bulletin.pl
-
-(終了は control + c)
+(2回目からはこちらで実行)
+% docker-compose up
 ```
 
-完成形のディレクトリ構造をイメージしておくとよい
+Dockerfile
 
-- [dir_history.md](/dir_history.md#chapter2): STEP3 を参照
+```docker
+FROM perl:5.32.1
+RUN cpanm Carton && mkdir -p /usr/src/app && \
+apt-get update && \
+apt-get install -y sqlite3
+WORKDIR /usr/src/app
+```
 
-## SUMMARY
+docker-compose.yml
 
--
--
--
+```docker
+version: '3.8'
+services:
+  web:
+    container_name: ctr-beginning-mojo
+    build:
+      context: .
+    image: img-beginning-mojo
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '3000:3000'
+    command: './compose-cmd.bash'
+```
 
-## SEE ALSO
+compose-cmd.bash
 
-- [/README.md](/README.md) - beginning_mojo - Perl (Mojolicious) を使って web アプリ開発に挑戦
+```bash
+#!/usr/bin/env bash
+carton install && \
+carton exec -- mojo generate lite-app bulletin.pl
+if [ -f ./db/bulletin.sql ] && [ -f ./db/bulletin.db ]; then
+    carton exec -- morbo bulletin.pl
+elif [ -s ./db/bulletin.sql ]; then
+    sqlite3 ./db/bulletin.db < ./db/bulletin.sql
+    carton exec -- morbo bulletin.pl
+else
+    echo "not exist bulletin.sql !!"
+fi
+```
+
+完成形のファイル構成
+
+```md
+dir                   # Application directory
+|- local              # 拡張モジュール各種
+|- .gitignore         # git で管理しないリスト
+|- bulletin.pl        # 実行スクリプト
+|- compose-cmd.bash   # docker-compose の中で実行するコマンド
+|- cpanfile           # インストールするモジュールリスト
+|- cpanfile.snapshot  # モジュールインストール履歴
+|- docker-compose.yml # docker compose 実行
+|- Dockerfile         # docker イメージ作成
++- README.md          # はじめに読む資料
+```
+
+## Draft
+
+### Overview
+
+- なにをつくるか
+  - 簡易的な掲示板 web アプリ
+- どうつくるか
+  - アプリの仕様案
+  - 開発環境の案
+    - サーバーサイド
+      - システム Linux を想定
+      - プログラミング言語: Perl
+      - web フレームワーク: mojo
+    - クライアント
+      - web ブラウザ google chrome のみを想定
+      - 今回は java script による画面の装飾はしない
+    - 開発環境(手元のPC)
+      - システム MacOS
+      - プログラミング言語: Perl
+      - web フレームワーク: mojo
+      - docker 環境を活用
+  - 実装について参考になりそうな資料を用意
+
+### Screen
+
+![画面遷移](/chapter1/borad.jpg)
+
+### URL
+
+- アプリ名: bulletin
+- URL:
+  - GET - `/` - index 掲示板の紹介画面
+  - GET - `/list` - list 掲示板の一覧表示
+  - GET - `/create` - create 掲示板への書き込み入力画面
+  - POST - `/store` - store 掲示板への書き込み実行
+- 公開環境: 今回は準備しない
+
+### DB
+
+- データベース: sqlite3 `bulletin.sql`
+
+```sql
+DROP TABLE IF EXISTS bulletin;
+CREATE TABLE bulletin (                                 -- 掲示板
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,  -- ID (例: 5)
+    comment         TEXT,                               -- コメント (例: '明日は晴れそう')
+    deleted         INTEGER,                            -- 削除フラグ (例: 0: 削除していない, 1: 削除済み)
+    created_ts      TEXT,                               -- 登録日時 (例: '2021-02-26 17:01:29')
+    modified_ts     TEXT                                -- 修正日時 (例: '2021-02-26 17:01:29')
+);
+```
