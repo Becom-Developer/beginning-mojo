@@ -3,7 +3,7 @@
 bulletin - 簡易的な掲示板
 
 ```text
-開発課題
+chapter1 - 開発課題
 ```
 
 ## Draft
@@ -31,7 +31,7 @@ bulletin - 簡易的な掲示板
 
 ### Screen
 
-![画面遷移](/chapter1/borad.jpg)
+![画面遷移](/img/borad.jpg)
 
 ### URL
 
@@ -45,7 +45,7 @@ bulletin - 簡易的な掲示板
 
 ### DB
 
-- データベース: sqlite3
+- データベース: sqlite3 `bulletin.sql`
 
 ```sql
 DROP TABLE IF EXISTS bulletin;
