@@ -4,7 +4,7 @@ bulletin - 簡易的な掲示板
 
 ```md
 chapter3/section3 - データーベースと接続
-bulletin.pl に teng メソッド追加、list, store コントーラー修正
+bulletin.pl に teng を呼び出す為の関数定義、list, store コントーラー修正
 ```
 
 ## Setting
