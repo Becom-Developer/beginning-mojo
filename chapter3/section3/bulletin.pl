@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-use Mojolicious::Lite;
+use Mojolicious::Lite -signatures;
 use Teng;
 use Teng::Schema::Loader;
 use Time::Piece;
@@ -23,13 +23,11 @@ sub teng {
     return $teng;
 }
 
-get '/' => sub {
-    my $c = shift;
+get '/' => sub ($c) {
     $c->render( template => 'index' );
 };
 
-get '/list' => sub {
-    my $c    = shift;
+get '/list' => sub ($c) {
     my $teng = teng();
 
     my @bulletin_rows = $teng->search( 'bulletin', +{ deleted => 0 } );
@@ -43,13 +41,11 @@ get '/list' => sub {
     $c->render( template => 'list' );
 };
 
-get '/create' => sub {
-    my $c = shift;
+get '/create' => sub ($c) {
     $c->render( template => 'create' );
 };
 
-post '/store' => sub {
-    my $c      = shift;
+post '/store' => sub ($c) {
     my $params = $c->req->params->to_hash;
     my $teng   = teng();
     my $t      = localtime;
