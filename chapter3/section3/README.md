@@ -1,28 +1,137 @@
-# NAME
+# Name
 
-section3 - 実装作業 (データーベースと接続)
+bulletin - 簡易的な掲示板
 
-```
-現在ではデータの永続化は様々な手法があるが広く使われているSQLについて学ぶ
-```
-
-## SUBSECTION1
-
-___sqlite3 を設定___
-
-データベースアプリケーションは様々な選択肢があるが今回は`sqlite3`を活用する
-
-```sh
-(データベース用のディレクトリの中にスキーマーファイル用意)
-$ mkdir ~/github/beginning_mojo/tutorial/db
-$ touch ~/github/beginning_mojo/tutorial/db/bulletin_schema.sql
+```md
+chapter3/section3 - データーベースと接続
+bulletin.pl に teng メソッド追加、list, store コントーラー修正
 ```
 
-## SUBSECTION2
+## Setting
 
-___スキーマーファイルを任意のテキストエディタで作成___
+ローカル開発環境、初期の構築手順 (MacOS)
 
-`/db/bulletin_schema.sql`
+```zsh
+(任意のディレクリを作成、今回は ~/tmp/bulletin/)
+% mkdir -p ~/tmp/bulletin/ && cd ~/tmp/bulletin/
+
+(ファイルの中身は下記の記事参考)
+% touch Dockerfile docker-compose.yml compose-cmd.bash && \
+chmod +x compose-cmd.bash && \
+echo "requires 'Mojolicious', '== 9.01';" > cpanfile && \
+echo "local/\n.DS_Store\ndb/*.db" > .gitignore
+
+(データベースのファイルを作っておく、内容は下記の DB のスキーマ)
+mkdir db && touch ./db/bulletin.sql
+
+(最初はイメージがないので build オプションで実行)
+% docker-compose up --build
+
+(ビルドがすべておわったら web ブラウザで localhost:3000 で確認)
+
+(2回目からはこちらで実行)
+% docker-compose up
+```
+
+Dockerfile
+
+```docker
+FROM perl:5.32.1
+RUN cpanm Carton && mkdir -p /usr/src/app && \
+apt-get update && \
+apt-get install -y sqlite3
+WORKDIR /usr/src/app
+```
+
+docker-compose.yml
+
+```docker
+version: '3.8'
+services:
+  web:
+    container_name: ctr-beginning-mojo
+    build:
+      context: .
+    image: img-beginning-mojo
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '3000:3000'
+    command: './compose-cmd.bash'
+```
+
+compose-cmd.bash
+
+```bash
+#!/usr/bin/env bash
+carton install && \
+carton exec -- mojo generate lite-app bulletin.pl
+if [ -f ./db/bulletin.sql ] && [ -f ./db/bulletin.db ]; then
+    carton exec -- morbo bulletin.pl
+elif [ -s ./db/bulletin.sql ]; then
+    sqlite3 ./db/bulletin.db < ./db/bulletin.sql
+    carton exec -- morbo bulletin.pl
+else
+    echo "not exist bulletin.sql !!"
+fi
+```
+
+完成形のファイル構成
+
+```md
+dir                   # Application directory
+|- db                 # データベース関連ファイル
+|- local              # 拡張モジュール各種
+|- .gitignore         # git で管理しないリスト
+|- bulletin.pl        # 実行スクリプト
+|- compose-cmd.bash   # docker-compose の中で実行するコマンド
+|- cpanfile           # インストールするモジュールリスト
+|- cpanfile.snapshot  # モジュールインストール履歴
+|- docker-compose.yml # docker compose 実行
+|- Dockerfile         # docker イメージ作成
++- README.md          # はじめに読む資料
+```
+
+## Draft
+
+### Overview
+
+- なにをつくるか
+  - 簡易的な掲示板 web アプリ
+- どうつくるか
+  - アプリの仕様案
+  - 開発環境の案
+    - サーバーサイド
+      - システム Linux を想定
+      - プログラミング言語: Perl
+      - web フレームワーク: mojo
+    - クライアント
+      - web ブラウザ google chrome のみを想定
+      - 今回は java script による画面の装飾はしない
+    - 開発環境(手元のPC)
+      - システム MacOS
+      - プログラミング言語: Perl
+      - web フレームワーク: mojo
+      - docker 環境を活用
+  - 実装について参考になりそうな資料を用意
+
+### Screen
+
+![画面遷移](/img/borad.jpg)
+
+### URL
+
+- アプリ名: bulletin
+- URL:
+  - GET - `/` - index 掲示板の紹介画面
+  - GET - `/list` - list 掲示板の一覧表示
+  - GET - `/create` - create 掲示板への書き込み入力画面
+  - POST - `/store` - store 掲示板への書き込み実行
+- 公開環境: 今回は準備しない
+
+### DB
+
+- データベース: sqlite3 `bulletin.sql`
 
 ```sql
 DROP TABLE IF EXISTS bulletin;
@@ -30,89 +139,7 @@ CREATE TABLE bulletin (                                 -- 掲示板
     id              INTEGER PRIMARY KEY AUTOINCREMENT,  -- ID (例: 5)
     comment         TEXT,                               -- コメント (例: '明日は晴れそう')
     deleted         INTEGER,                            -- 削除フラグ (例: 0: 削除していない, 1: 削除済み)
-    created_ts      TEXT,                               -- 登録日時 (例: '2019-08-22 17:01:29')
-    modified_ts     TEXT                                -- 修正日時 (例: '2019-08-22 17:01:29')
+    created_ts      TEXT,                               -- 登録日時 (例: '2021-02-26 17:01:29')
+    modified_ts     TEXT                                -- 修正日時 (例: '2021-02-26 17:01:29')
 );
 ```
-
-## SUBSECTION3
-
-___スキーマーファイルを読み込んでデータベースファイルを作成___
-
-```sh
-$ cd ~/github/beginning_mojo/tutorial/db
-$ sqlite3 ./bulletin.db < ./bulletin_schema.sql
-
-(db ファイルは環境によって異なるので大抵は git で管理をしない)
-$ cd ~/github/beginning_mojo/tutorial/
-$ echo 'db/*.db' >> .gitignore;
-```
-
-昨今ではデータベースとの接続はORM(オーアールマッピング)と言われる手法を使うことが多い
-
-Perl の Teng モジュールを活用する
-
-```sh
-(Perl のバージョンを固定 Mojolicious をインストール)
-$ cd ~/github/beginning_mojo/tutorial/
-$ echo "requires 'Teng', '0.31';" >> cpanfile;
-$ echo "requires 'DBD::SQLite', '1.64';" >> cpanfile;
-$ carton install
-```
-
-## SUBSECTION4
-
-___`/bulletin.pl`を修正___
-
-データベースのスキーマーを自動取得する、実行速度は遅くはなる
-
-```perl
-...
-use Teng;
-use Teng::Schema::Loader;
-
-sub teng {
-    my $dsn_str = 'dbi:SQLite:./db/bulletin.db';
-    ...
-    return $teng;
-}
-```
-
-ダミーの値をデータベースから取得に切り替える
-
-```perl
-get '/list' => sub {
-    my $c    = shift;
-    my $teng = teng();
-
-    my @bulletin_rows = $teng->search( 'bulletin', +{ deleted => 0 } );
-    ...
-};
-```
-
-書き込みを登録できるようにする
-
-```perl
-...
-use Time::Piece;
-...
-post '/store' => sub {
-    my $c      = shift;
-    my $params = $c->req->params->to_hash;
-    ...
-    $c->redirect_to('/list');
-};
-```
-
-- ORMを使うと実行速度は落ちるがメンテナンスはしやすくなる
-- データを作成するときにタイムスタンプを作るのはよくあるやり方
-
-## SUBSECTION5
-
-___この作業での完成形___
-
-- [/chapter3/section3/bulletin.pl](/chapter3/section3/bulletin.pl)
-
-# SEE ALSO
-
-- [/chapter3](/chapter3) - 仕様案を参考に実装
