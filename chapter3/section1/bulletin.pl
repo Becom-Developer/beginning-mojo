@@ -1,18 +1,15 @@
 #!/usr/bin/env perl
-use Mojolicious::Lite;
+use Mojolicious::Lite -signatures;
 
-get '/' => sub {
-    my $c = shift;
+get '/' => sub ($c) {
     $c->render( template => 'index' );
 };
 
-get '/list' => sub {
-    my $c = shift;
+get '/list' => sub ($c) {
     $c->render( template => 'list' );
 };
 
-get '/create' => sub {
-    my $c = shift;
+get '/create' => sub ($c) {
     $c->render( template => 'create' );
 };
 
