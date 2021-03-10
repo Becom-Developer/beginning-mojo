@@ -1,37 +1,39 @@
 #!/usr/bin/env perl
-use Mojolicious::Lite;
+use Mojolicious::Lite -signatures;
 
-get '/' => sub {
-    my $c = shift;
+get '/' => sub ($c) {
     $c->render( template => 'index' );
 };
 
-get '/list' => sub {
-    my $c          = shift;
+get '/list' => sub ($c) {
     my $dummy_list = [
-        +{  id          => 1,
+        +{
+            id          => 1,
             comment     => 'はじめての投稿',
             deleted     => 0,
-            created_ts  => '2019-10-10 16:20:25',
-            modified_ts => '2019-10-10 16:20:25',
+            created_ts  => '2021-03-10 16:20:25',
+            modified_ts => '2021-03-10 16:20:25',
         },
-        +{  id          => 2,
+        +{
+            id          => 2,
             comment     => '今日は晴れでした',
             deleted     => 0,
-            created_ts  => '2019-10-11 16:20:25',
-            modified_ts => '2019-10-11 16:20:25',
+            created_ts  => '2021-03-11 16:20:25',
+            modified_ts => '2021-03-11 16:20:25',
         },
-        +{  id          => 3,
+        +{
+            id          => 3,
             comment     => 'アイスがうまかった',
             deleted     => 0,
-            created_ts  => '2019-10-12 16:20:25',
-            modified_ts => '2019-10-12 16:20:25',
+            created_ts  => '2021-03-12 16:20:25',
+            modified_ts => '2021-03-12 16:20:25',
         },
-        +{  id          => 4,
+        +{
+            id          => 4,
             comment     => 'あいつはうまいこと言うなぁ',
             deleted     => 0,
-            created_ts  => '2019-10-13 16:20:25',
-            modified_ts => '2019-10-13 16:20:25',
+            created_ts  => '2021-03-13 16:20:25',
+            modified_ts => '2021-03-13 16:20:25',
         },
     ];
     $c->stash->{bulletin_list} = $dummy_list;
@@ -40,13 +42,11 @@ get '/list' => sub {
     $c->render( template => 'list' );
 };
 
-get '/create' => sub {
-    my $c = shift;
+get '/create' => sub ($c) {
     $c->render( template => 'create' );
 };
 
-post '/store' => sub {
-    my $c = shift;
+post '/store' => sub ($c) {
     $c->redirect_to('/list');
 };
 
