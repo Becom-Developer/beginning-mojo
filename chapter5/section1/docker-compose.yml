@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  web:
+    container_name: ctr-beginning-mojo
+    build:
+      context: .
+    image: img-beginning-mojo
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '3000:3000'
+    command: '${BULLETIN_COMMNAD_FILE-./bin/compose-cmd.bash}'
+
