@@ -1,4 +1,0 @@
-requires 'Mojolicious', '== 8.25';
-requires 'Teng', '0.31';
-requires 'DBD::SQLite', '1.64';
-requires 'HTML::FillInForm::Lite', '1.15';
