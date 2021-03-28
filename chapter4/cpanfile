@@ -1,0 +1,3 @@
+requires 'Mojolicious', '== 9.01';
+requires 'Teng', '0.32';
+requires 'DBD::SQLite', '1.66';
