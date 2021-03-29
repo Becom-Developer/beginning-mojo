@@ -7,6 +7,21 @@ chapter5/section1 - テストコードファイルの設置
 テストコードを配置するディレクトリを用意し、テストコードファイルを設置、実行
 ```
 
+## Command
+
+忘れてしまいがちなコマンドのメモ
+
+```zsh
+(アプリケーションの開始)
+% docker-compose up
+
+(テストコード実行、アプリケーションが実行されている状態で別のウインドウから)
+% docker-compose exec web carton exec -- prove
+
+(テストコード実行、アプリケーションが実行されていない状態で)
+% docker-compose --env-file ./etc/.env.test up
+```
+
 ## Todo
 
 今後の課題メモ
