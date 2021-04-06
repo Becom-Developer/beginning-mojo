@@ -12,6 +12,7 @@ init_db();
 
 # web アプリの実行スクリプトを指定
 my $script = curfile->dirname->sibling('bulletin.pl');
+my $t = Test::Mojo->new($script);
 
 # テスト用データベース準備
 sub init_db {
@@ -24,35 +25,26 @@ sub init_db {
     return;
 }
 
-# ルーティングテスト
-my $t = Test::Mojo->new($script);
-$t->get_ok('/')->status_is(200);
-
 # ルーティングごとにテスト
 subtest '/' => sub {
-    my $t = Test::Mojo->new;
     $t->get_ok('/')->status_is(200);
 };
 
 subtest '/list' => sub {
-    my $t = Test::Mojo->new;
     $t->get_ok('/list')->status_is(200);
 };
 
 subtest '/create' => sub {
-    my $t = Test::Mojo->new;
     $t->get_ok('/create')->status_is(200);
 };
 
 subtest '/store' => sub {
-    my $t      = Test::Mojo->new;
     my $params = +{};
     $t->post_ok( '/store' => form => $params )->status_is(302);
 };
 
 # トップページから登録、一覧までの挙動
 subtest 'top -> list -> create -> store -> list' => sub {
-    my $t = Test::Mojo->new;
     $t->get_ok('/')->status_is(200);
 
     # [top -> list] リンクURLの存在確認
