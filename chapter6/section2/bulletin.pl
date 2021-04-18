@@ -5,6 +5,8 @@ use Teng::Schema::Loader;
 use Time::Piece;
 use Mojo::Util qw(trim);
 
+helper teng => sub { teng() };
+
 sub teng {
     my $dsn_str = 'dbi:SQLite:./db/bulletin.db';
     if ( $ENV{MOJO_MODE} && $ENV{MOJO_MODE} eq 'testing' ) {
@@ -78,6 +80,25 @@ post '/store' => sub ($c) {
     $c->redirect_to('/list');
 };
 
+post '/remove' => sub ($c) {
+    my $params = $c->req->params->to_hash;
+    my $teng = teng();
+    my $t    = localtime;
+    my $date = $t->date;
+    my $time = $t->time;
+    my $row  = $teng->single( 'bulletin', $params );
+    return $c->redirect_to('/list') if !$row;
+
+    $row->update(
+        +{  deleted     => 1,
+            modified_ts => "$date $time",
+        }
+    );
+
+    $c->flash( msg => "削除しました" );
+    $c->redirect_to('/list');
+};
+
 app->start;
 __DATA__
 
@@ -91,6 +112,9 @@ __DATA__
 % layout 'default';
 % title '掲示板の一覧表示';
 <h1>一覧表示</h1>
+% if ( my $msg = flash('msg') ) {
+  <p style="color:red"><%= $msg %></p>
+% }
 <table border="1">
   <caption>掲示板</caption>
   <thead>
@@ -104,6 +128,12 @@ __DATA__
     <tr>
       <td><%= $bulletin->{comment} %></td>
       <td><%= $bulletin->{created_ts} %></td>
+      <td>
+        <form name="remove_<%= $bulletin->{id} %>" method="post" action="/remove">
+        <input type="hidden" name="id" value="<%= $bulletin->{id} %>">
+        <input type="submit" value="削除">
+        </form>
+      </td>
     </tr>
   % }
   </tbody>
