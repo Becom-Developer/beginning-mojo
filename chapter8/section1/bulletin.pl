@@ -4,7 +4,10 @@ use Teng;
 use Teng::Schema::Loader;
 use Time::Piece;
 use Mojo::Util qw(trim);
+use lib "./lib";
+use Bulletin::Model;
 
+helper model => sub { Bulletin::Model->new(); };
 helper teng => sub { teng() };
 
 sub teng {
