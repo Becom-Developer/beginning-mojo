@@ -8,16 +8,16 @@ use lib "./lib";
 use Bulletin::Model;
 
 helper model => sub { Bulletin::Model->new(); };
-helper teng => sub { teng() };
+helper teng  => sub { teng() };
 
 sub teng {
     my $dsn_str = 'dbi:SQLite:./db/bulletin.db';
     if ( $ENV{MOJO_MODE} && $ENV{MOJO_MODE} eq 'testing' ) {
         $dsn_str = 'dbi:SQLite:./db/bulletin.testing.db';
     }
-    my $user    = '';
-    my $pass    = '';
-    my $option  = +{
+    my $user   = '';
+    my $pass   = '';
+    my $option = +{
         RaiseError     => 1,
         PrintError     => 0,
         AutoCommit     => 1,
@@ -85,15 +85,16 @@ post '/store' => sub ($c) {
 
 post '/remove' => sub ($c) {
     my $params = $c->req->params->to_hash;
-    my $teng = teng();
-    my $t    = localtime;
-    my $date = $t->date;
-    my $time = $t->time;
-    my $row  = $teng->single( 'bulletin', $params );
+    my $teng   = teng();
+    my $t      = localtime;
+    my $date   = $t->date;
+    my $time   = $t->time;
+    my $row    = $teng->single( 'bulletin', $params );
     return $c->redirect_to('/list') if !$row;
 
     $row->update(
-        +{  deleted     => 1,
+        +{
+            deleted     => 1,
             modified_ts => "$date $time",
         }
     );
