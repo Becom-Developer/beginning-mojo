@@ -3,6 +3,9 @@ use Mojo::Base -base;
 use Teng;
 use Teng::Schema::Loader;
 
+# mojo のhas アクセスメソッド提供、呼び出し元が返却される
+has [qw{req_params}];
+
 # 全てのモデルで共通して使えるメソッドを定義
 sub teng {
     my $self    = shift;

@@ -60,17 +60,8 @@ post '/store' => sub ($c) {
         $c->redirect_to('/create');
         return;
     }
-    my $teng = $c->teng;
-    my $t    = localtime;
-    my $date = $t->date;
-    my $time = $t->time;
-    $params = +{
-        %{$params},
-        deleted     => 0,
-        created_ts  => "$date $time",
-        modified_ts => "$date $time",
-    };
-    $teng->fast_insert( 'bulletin', $params );
+    my $model = $c->model->bulletin->req_params($params);
+    $model->store;
     $c->redirect_to('/list');
 };
 
