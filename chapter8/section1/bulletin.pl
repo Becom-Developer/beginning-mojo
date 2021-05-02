@@ -8,7 +8,7 @@ use lib "./lib";
 use Bulletin::Model;
 
 helper model => sub { Bulletin::Model->new(); };
-helper teng  => sub { teng() };
+helper teng  => sub { Bulletin::Model->new()->teng };
 
 sub teng {
     my $dsn_str = 'dbi:SQLite:./db/bulletin.db';
@@ -37,8 +37,7 @@ get '/' => sub ($c) {
 };
 
 get '/list' => sub ($c) {
-    my $teng = teng();
-
+    my $teng          = $c->teng;
     my @bulletin_rows = $teng->search( 'bulletin', +{ deleted => 0 } );
     my $bulletin_list = [];
     for my $row (@bulletin_rows) {
@@ -68,8 +67,7 @@ post '/store' => sub ($c) {
         $c->redirect_to('/create');
         return;
     }
-
-    my $teng = teng();
+    my $teng = $c->teng;
     my $t    = localtime;
     my $date = $t->date;
     my $time = $t->time;
@@ -85,7 +83,7 @@ post '/store' => sub ($c) {
 
 post '/remove' => sub ($c) {
     my $params = $c->req->params->to_hash;
-    my $teng   = teng();
+    my $teng   = $c->teng;
     my $t      = localtime;
     my $date   = $t->date;
     my $time   = $t->time;
