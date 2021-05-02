@@ -37,15 +37,8 @@ get '/' => sub ($c) {
 };
 
 get '/list' => sub ($c) {
-    my $teng          = $c->teng;
-    my @bulletin_rows = $teng->search( 'bulletin', +{ deleted => 0 } );
-    my $bulletin_list = [];
-    for my $row (@bulletin_rows) {
-        push @{$bulletin_list}, $row->get_columns;
-    }
-    $c->stash->{bulletin_list} = $bulletin_list;
-    my $total = scalar @{$bulletin_list};
-    $c->stash->{total} = $total;
+    my $to_template = $c->model->bulletin->to_template_list;
+    $c->stash($to_template);
     $c->render( template => 'list' );
 };
 
