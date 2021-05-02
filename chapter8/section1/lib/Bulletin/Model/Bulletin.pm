@@ -39,4 +39,29 @@ sub store {
     return;
 }
 
+sub remove {
+    my $self   = shift;
+    my $remove = +{
+        remove_id => undef,
+        msg       => '',
+    };
+
+    my $params = $self->req_params;
+    my $teng   = $self->teng;
+    my $t      = localtime;
+    my $date   = $t->date;
+    my $time   = $t->time;
+    my $row    = $teng->single( 'bulletin', $params );
+    return if !$row;
+
+    $row->update(
+        +{  deleted     => 1,
+            modified_ts => "$date $time",
+        }
+    );
+    $remove->{remove_id} = $row->id;
+    $remove->{msg}       = "削除しました";
+    return $remove;
+}
+
 1;

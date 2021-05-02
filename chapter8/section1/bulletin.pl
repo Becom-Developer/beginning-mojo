@@ -10,28 +10,6 @@ use Bulletin::Model;
 helper model => sub { Bulletin::Model->new(); };
 helper teng  => sub { Bulletin::Model->new()->teng };
 
-sub teng {
-    my $dsn_str = 'dbi:SQLite:./db/bulletin.db';
-    if ( $ENV{MOJO_MODE} && $ENV{MOJO_MODE} eq 'testing' ) {
-        $dsn_str = 'dbi:SQLite:./db/bulletin.testing.db';
-    }
-    my $user   = '';
-    my $pass   = '';
-    my $option = +{
-        RaiseError     => 1,
-        PrintError     => 0,
-        AutoCommit     => 1,
-        sqlite_unicode => 1,
-    };
-
-    my $dbh  = DBI->connect( $dsn_str, $user, $pass, $option );
-    my $teng = Teng::Schema::Loader->load(
-        dbh       => $dbh,
-        namespace => 'DB::Teng',
-    );
-    return $teng;
-}
-
 get '/' => sub ($c) {
     $c->render( template => 'index' );
 };
@@ -67,21 +45,12 @@ post '/store' => sub ($c) {
 
 post '/remove' => sub ($c) {
     my $params = $c->req->params->to_hash;
-    my $teng   = $c->teng;
-    my $t      = localtime;
-    my $date   = $t->date;
-    my $time   = $t->time;
-    my $row    = $teng->single( 'bulletin', $params );
-    return $c->redirect_to('/list') if !$row;
-
-    $row->update(
-        +{
-            deleted     => 1,
-            modified_ts => "$date $time",
-        }
-    );
-
-    $c->flash( msg => "削除しました" );
+    my $model  = $c->model->bulletin->req_params($params);
+    my $msg    = '';
+    if ( my $remove = $model->remove ) {
+        $msg = $remove->{msg};
+    }
+    $c->flash( msg => $msg );
     $c->redirect_to('/list');
 };
 
