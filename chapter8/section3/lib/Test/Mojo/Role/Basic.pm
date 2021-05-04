@@ -9,11 +9,6 @@ sub init {
 
     # テストの時は強制的にモードを変更
     $ENV{MOJO_MODE} = 'testing';
-
-    # web アプリを実行 (.pm ではないので require で読み込み)
-    my $app = curfile->dirname->sibling('../../../bulletin.pl');
-    require $app;
-
     $self->init_db;
     return;
 }

@@ -14,7 +14,14 @@ subtest '/' => sub {
 };
 
 subtest '/remove' => sub {
+    # パラメーターなしでリクエスト
+    # 削除には対象のIDを指定
+    # 失敗して一覧へリダイレクト
     $t->post_ok( '/remove' => form => +{} )->status_is(302);
+    my $location_url = $t->tx->res->headers->location;
+    $t->get_ok($location_url)->status_is(200);
+    my $title = '掲示板の一覧表示';
+    $t->text_is( 'html head title' => $title );
 };
 
 # 画面遷移
