@@ -3,8 +3,8 @@
 bulletin - 簡易的な掲示板
 
 ```md
-chapter8/section2 - テンプレート
-テンプレートを切り分ける
+chapter8/section3 - コントローラー
+コントローラーを切り分ける
 ```
 
 ## Command
