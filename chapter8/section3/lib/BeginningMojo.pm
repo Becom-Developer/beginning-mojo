@@ -1,13 +1,13 @@
-package Bulletin;
+package BeginningMojo;
 use Mojo::Base 'Mojolicious';
 use Mojo::Util qw(trim);
-use Bulletin::Model;
+use BeginningMojo::Model;
 
 sub startup {
     my $self = shift;
 
-    $self->helper( model => sub { Bulletin::Model->new(); } );
-    $self->helper( teng  => sub { Bulletin::Model->new()->teng; } );
+    $self->helper( model => sub { BeginningMojo::Model->new(); } );
+    $self->helper( teng  => sub { BeginningMojo::Model->new()->teng; } );
 
     my $r = $self->routes;
     $r->get('/')->to('bulletin#index');

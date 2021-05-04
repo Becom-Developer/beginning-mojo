@@ -1,4 +1,4 @@
-package Bulletin::Controller::Bulletin;
+package BeginningMojo::Controller::Bulletin;
 use Mojo::Base 'Mojolicious::Controller';
 use Mojo::Util qw(trim);
 

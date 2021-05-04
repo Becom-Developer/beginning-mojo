@@ -6,7 +6,7 @@ use FindBin;
 use lib "$FindBin::Bin/../lib";
 
 # web アプリを実行からテスト用DB準備まで
-my $t = Test::Mojo->with_roles('+Basic')->new('Bulletin');
+my $t = Test::Mojo->with_roles('+Basic')->new('BeginningMojo');
 $t->init;
 
 # ルーティングごとにテスト
