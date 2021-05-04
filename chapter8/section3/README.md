@@ -114,14 +114,14 @@ dir                       # Application directory
 |- doc                    # 参考資料各種
 |- etc                    # 設定ファイル
 |- lib                    # 読み込みファイル各種
-|  |- Bulletin            # アプリケーションファイル各種
+|  |- BeginningMojo       # アプリケーションファイル各種
 |  |  +- Controller       # アプリケーションコントローラー
 |  |  +- DB               # データベースオブジェクトロジック各種
 |  |  +- Model            # コントローラーロジック
 |  |  +- DB.pm            # データベースオブジェクトロジック呼び出し
 |  |  +- Model.pm         # コントローラーロジック呼び出し
 |  |- Test                # テストコード拡張モジュール
-|  +- Bulletin.pm         # アプリケーション定義
+|  +- BeginningMojo.pm    # アプリケーション定義
 |- local                  # 拡張モジュール各種
 |- public                 # 静的なファイル各種
 |- script                 # 実行ファイル各種
