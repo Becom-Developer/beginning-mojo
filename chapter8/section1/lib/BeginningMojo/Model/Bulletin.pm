@@ -1,5 +1,5 @@
-package Bulletin::Model::Bulletin;
-use Mojo::Base 'Bulletin::Model::Base';
+package BeginningMojo::Model::Bulletin;
+use Mojo::Base 'BeginningMojo::Model::Base';
 use Time::Piece;
 
 # ロジックメソッドを定義

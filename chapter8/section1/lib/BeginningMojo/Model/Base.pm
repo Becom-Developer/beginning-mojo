@@ -1,4 +1,4 @@
-package Bulletin::Model::Base;
+package BeginningMojo::Model::Base;
 use Mojo::Base -base;
 use Teng;
 use Teng::Schema::Loader;

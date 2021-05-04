@@ -5,10 +5,10 @@ use Teng::Schema::Loader;
 use Time::Piece;
 use Mojo::Util qw(trim);
 use lib "./lib";
-use Bulletin::Model;
+use BeginningMojo::Model;
 
-helper model => sub { Bulletin::Model->new(); };
-helper teng  => sub { Bulletin::Model->new()->teng };
+helper model => sub { BeginningMojo::Model->new(); };
+helper teng  => sub { BeginningMojo::Model->new()->teng };
 
 get '/' => sub ($c) {
     $c->render( template => 'index' );

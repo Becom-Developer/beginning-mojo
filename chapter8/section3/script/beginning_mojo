@@ -3,4 +3,4 @@ use strict;
 use warnings;
 use lib './lib';
 use Mojolicious::Commands;
-Mojolicious::Commands->start_app('beginning_mojo');
+Mojolicious::Commands->start_app('BeginningMojo');
