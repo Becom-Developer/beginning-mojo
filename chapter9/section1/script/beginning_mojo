@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use lib './lib';
+use Mojo::File 'curfile';
+use lib curfile->dirname->sibling('lib')->to_string;
 use Mojolicious::Commands;
 Mojolicious::Commands->start_app('BeginningMojo');
