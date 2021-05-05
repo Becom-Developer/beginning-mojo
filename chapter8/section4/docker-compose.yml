@@ -9,4 +9,6 @@ services:
       - .:/usr/src/app
     ports:
       - '3000:3000'
+    environment:
+      MOJO_MODE: '${MOJO_MODE-}'
     command: '${BULLETIN_COMMNAD_FILE-./bin/compose-cmd.bash}'

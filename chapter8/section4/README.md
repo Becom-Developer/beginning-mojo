@@ -113,6 +113,10 @@ dir                       # Application directory
 |- db                     # データベース関連ファイル
 |- doc                    # 参考資料各種
 |- etc                    # 設定ファイル
+|  +- beginning_mojo.common.conf        # 共通設定ファイル
+|  +- beginning_mojo.development.conf   # 開発環境の設定ファイル
+|  +- beginning_mojo.production.conf    # 公開環境の設定ファイル
+|  +- beginning_mojo.testing.conf       # テストコード環境の設定ファイル
 |- lib                    # 読み込みファイル各種
 |  |- BeginningMojo       # アプリケーションファイル各種
 |  |  +- Controller       # アプリケーションコントローラー
