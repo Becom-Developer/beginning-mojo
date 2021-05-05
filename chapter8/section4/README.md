@@ -3,8 +3,8 @@
 bulletin - 簡易的な掲示板
 
 ```md
-chapter8/section4 - 設定ファイルを導入
-環境によって挙動を変更する
+chapter8/section4 - 全体の調整
+全体の細かい調整をする
 ```
 
 ## Command
@@ -16,7 +16,7 @@ chapter8/section4 - 設定ファイルを導入
 % docker-compose up
 
 (テストコード実行、アプリケーションが実行されている状態で別のウインドウから)
-% docker-compose exec --env MOJO_MODE=testing web carton exec -- prove
+% docker-compose exec web carton exec -- prove
 
 (テストコード実行、アプリケーションが実行されていない状態で)
 % docker-compose --env-file ./etc/.env.test up
@@ -34,7 +34,7 @@ chapter8/section4 - 設定ファイルを導入
   - ~~投稿したコメントを削除する機能~~
 - 作業効率
   - ~~自動テストコードを実行できる仕組み~~
-  - ~~Mojolicious ベースの構造体に変更~~
+  - Mojolicious ベースの構造体に変更
 
 ## Setting
 
@@ -113,10 +113,6 @@ dir                       # Application directory
 |- db                     # データベース関連ファイル
 |- doc                    # 参考資料各種
 |- etc                    # 設定ファイル
-|  +- beginning_mojo.common.conf        # 共通設定ファイル
-|  +- beginning_mojo.development.conf   # 開発環境の設定ファイル
-|  +- beginning_mojo.production.conf    # 公開環境の設定ファイル
-|  +- beginning_mojo.testing.conf       # テストコード環境の設定ファイル
 |- lib                    # 読み込みファイル各種
 |  |- BeginningMojo       # アプリケーションファイル各種
 |  |  +- Controller       # アプリケーションコントローラー

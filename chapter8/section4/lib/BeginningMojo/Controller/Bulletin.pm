@@ -1,22 +1,22 @@
 package BeginningMojo::Controller::Bulletin;
-use Mojo::Base 'Mojolicious::Controller';
+use Mojo::Base 'BeginningMojo::Controller::Base';
 use Mojo::Util qw(trim);
 
 sub index {
     my $self = shift;
-    $self->render( template => 'index' );
+    $self->render( template => 'bulletin/index' );
 }
 
 sub list {
     my $self        = shift;
     my $to_template = $self->model->bulletin->to_template_list;
     $self->stash($to_template);
-    $self->render( template => 'list' );
+    $self->render( template => 'bulletin/list' );
 }
 
 sub create {
     my $self = shift;
-    $self->render( template => 'create' );
+    $self->render( template => 'bulletin/create' );
 }
 
 sub store {

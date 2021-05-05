@@ -7,21 +7,16 @@ use Mojo::Util qw{dumper};
 sub init {
     my $self = shift;
 
-    # テストコード実行の制限
-    die 'not mode testing!' if $self->app->config->{mode} ne 'testing';
-
+    # テストの時は強制的にモードを変更
+    $ENV{MOJO_MODE} = 'testing';
     $self->init_db;
     return;
 }
 
 sub init_db {
     my $self = shift;
-
-    # データベースの初期化間違いを防止
-    die 'not mode testing!' if $self->app->config->{mode} ne 'testing';
-
-    my $db     = $self->app->config->{db_file};
-    my $schema = $self->app->config->{schema_file};
+    my $db = curfile->dirname->sibling( '../../../db', 'bulletin.testing.db' );
+    my $schema = curfile->dirname->sibling( '../../../db', 'bulletin.sql' );
 
     # system コマンドは失敗すると true
     my $cmd = "sqlite3 $db < $schema";
