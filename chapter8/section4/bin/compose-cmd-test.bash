@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-carton exec -- prove
+carton exec -- prove --lib

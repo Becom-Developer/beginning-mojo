@@ -16,7 +16,7 @@ chapter8/section4 - 全体の調整
 % docker-compose up
 
 (テストコード実行、アプリケーションが実行されている状態で別のウインドウから)
-% docker-compose exec web carton exec -- prove
+% docker-compose exec web carton exec -- prove --lib
 
 (テストコード実行、アプリケーションが実行されていない状態で)
 % docker-compose --env-file ./etc/.env.test up
@@ -34,7 +34,7 @@ chapter8/section4 - 全体の調整
   - ~~投稿したコメントを削除する機能~~
 - 作業効率
   - ~~自動テストコードを実行できる仕組み~~
-  - Mojolicious ベースの構造体に変更
+  - ~~Mojolicious ベースの構造体に変更~~
 
 ## Setting
 
