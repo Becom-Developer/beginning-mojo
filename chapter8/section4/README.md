@@ -16,7 +16,7 @@ chapter8/section4 - 設定ファイルを導入
 % docker-compose up
 
 (テストコード実行、アプリケーションが実行されている状態で別のウインドウから)
-% docker-compose exec web carton exec -- prove
+% docker-compose exec --env MOJO_MODE=testing web carton exec -- prove
 
 (テストコード実行、アプリケーションが実行されていない状態で)
 % docker-compose --env-file ./etc/.env.test up
