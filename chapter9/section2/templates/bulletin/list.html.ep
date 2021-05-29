@@ -1,0 +1,38 @@
+% layout 'default';
+% title '掲示板の一覧表示';
+<h1>一覧表示</h1>
+% if ( my $msg = flash('msg') ) {
+  <p style="color:red"><%= $msg %></p>
+% }
+<table border="1">
+  <caption>掲示板</caption>
+  <thead>
+    <tr>
+      <th>コメント</th>
+      <th>投稿時刻</th>
+    </tr>
+  </thead>
+  <tbody>
+  % for my $bulletin (@{$c->stash->{bulletin_list}}) {
+    <tr>
+      <td><%= $bulletin->{comment} %></td>
+      <td><%= $bulletin->{created_ts} %></td>
+      <td>
+        <form name="remove_<%= $bulletin->{id} %>" method="post" action="/remove">
+        <input type="hidden" name="id" value="<%= $bulletin->{id} %>">
+        <input type="submit" value="削除">
+        </form>
+      </td>
+    </tr>
+  % }
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>投稿数の合計</th>
+      <td><%= $c->stash->{total} %></td>
+    </tr>
+  </tfoot>
+</table>
+<p><a href="/">掲示板の紹介画面へ</a></p>
+<p><a href="/create">掲示板への書き込み入力画面へ</a></p>
+
