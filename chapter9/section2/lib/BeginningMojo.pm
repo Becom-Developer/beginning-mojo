@@ -18,8 +18,6 @@ sub startup {
 
     $self->helper(
         model => sub { BeginningMojo::Model->new( conf => $config ); } );
-    $self->helper(
-        teng => sub { BeginningMojo::Model->new( conf => $config )->teng; } );
 
     my $r = $self->routes;
     $r->get('/')->to('bulletin#index');

@@ -1,6 +1,5 @@
 package BeginningMojo::Model::Bulletin;
 use Mojo::Base 'BeginningMojo::Model::Base';
-use Time::Piece;
 
 # ロジックメソッドを定義
 sub to_template_list {
@@ -9,7 +8,7 @@ sub to_template_list {
         bulletin_list => [],
         total         => 0,
     };
-    my $teng          = $self->teng;
+    my $teng          = $self->db->teng;
     my @bulletin_rows = $teng->search( 'bulletin', +{ deleted => 0 } );
     my $bulletin_list = [];
     for my $row (@bulletin_rows) {
@@ -25,17 +24,9 @@ sub store {
     my $self   = shift;
     my $params = $self->req_params;
 
-    my $teng = $self->teng;
-    my $t    = localtime;
-    my $date = $t->date;
-    my $time = $t->time;
-    $params = +{
-        %{$params},
-        deleted     => 0,
-        created_ts  => "$date $time",
-        modified_ts => "$date $time",
-    };
-    $teng->fast_insert( 'bulletin', $params );
+    my $db        = $self->db;
+    my $table     = 'bulletin';
+    my $insert_id = $db->teng_fast_insert( $table, $params );
     return;
 }
 
@@ -47,18 +38,11 @@ sub remove {
     };
 
     my $params = $self->req_params;
-    my $teng   = $self->teng;
-    my $t      = localtime;
-    my $date   = $t->date;
-    my $time   = $t->time;
+    my $teng   = $self->db->teng;
     my $row    = $teng->single( 'bulletin', $params );
     return if !$row;
 
-    $row->update(
-        +{  deleted     => 1,
-            modified_ts => "$date $time",
-        }
-    );
+    $row->soft_delete();
     $remove->{remove_id} = $row->id;
     $remove->{msg}       = "削除しました";
     return $remove;
