@@ -3,7 +3,7 @@
 bulletin - 簡易的な掲示板
 
 ```md
-chapter9/section2 - ORM 拡張ロジック
+chapter9/section2 - データベースロジック(ORM 拡張ロジック)
 ORM ロジックを拡張するやり方
 ```
 
